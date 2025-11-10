@@ -1,65 +1,90 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
+
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
+  const [tasks, setTasks] = useState([]);
+  const [input, setInput] = useState("");
+
+  const handleAdd = () => {
+    const updatedTasks = tasks.push({ text: input, checked: false });
+    setTasks(updatedTasks);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
+    <div className="w-screen h-screen flex justify-center p-10">
+      <Card className="w-[377px] h-[290px] gap-4 relative">
+        <CardHeader className="gap-5 w-[329px]">
+          {" "}
+          <h1 className="flex justify-center font-sans text-[20px] font-semibold w-[329px]">
+            To-Do list
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+          <div className="flex max-w-sm items-center gap-2 w-[329px]">
+            <Input
+              type="email"
+              placeholder="Add a new task..."
+              className="h-10 focus-visible:border-blue-600 focus-visible:border-2"
+              value={input}
+              onChange={(e) => setInput(e.target.input)}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            <Button
+              type="submit"
+              variant="outline"
+              className="bg-[#3C82F6] text-white w-[59px] h-10 font-sans font-normal text-[14px]"
+            >
+              add
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="account" className="w-[329px] gap-7">
+            <TabsList className="bg-white gap-1.5 h-8">
+              <TabsTrigger
+                value="All"
+                className="h-8 bg-[#F3F4F6] text-[#363636] font-normal text-[12px] data-[state=active]:bg-blue-500 
+    data-[state=active]:text-white "
+              >
+                All
+              </TabsTrigger>
+              <TabsTrigger
+                value="Active"
+                className="h-8 bg-[#F3F4F6] text-[#363636] font-normal text-[12px] data-[state=active]:bg-blue-500 
+    data-[state=active]:text-white "
+              >
+                Active
+              </TabsTrigger>
+              <TabsTrigger
+                value="Completed"
+                className="h-8 bg-[#F3F4F6] text-[#363636] font-normal text-[12px] data-[state=active]:bg-blue-500 
+    data-[state=active]:text-white "
+              >
+                Completed
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="All">1</TabsContent>
+            <TabsContent value="Active">2</TabsContent>
+            <TabsContent value="Completed">3</TabsContent>
+          </Tabs>
+        </CardContent>
+        <p className="flex absolute bottom-5 gap-1 self-center text-[12px] text-[#6B7280]">
+          Powered by{" "}
+          <span className="text-[12px] text-[#3B73ED]">Pinecone academy</span>
+        </p>
+      </Card>
     </div>
   );
 }
